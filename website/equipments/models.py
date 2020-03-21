@@ -16,10 +16,7 @@ class Camera(models.Model):
     inventory   = models.IntegerField()
     ratings     = models.IntegerField(choices=ratings)
 
-    def __str__(self):
-        return '{} {}'.format(self.company, self.model)
-    
-    class Meta:
+    def __str__(self):sudo apt install pgadmin4 pgadmin4-apache2
         verbose_name = "Camera"
         verbose_name_plural = "Cameras"
 

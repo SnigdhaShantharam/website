@@ -4,6 +4,7 @@ from .models import Camera, Lens, Accessories, Equipments
 
 admin.site.site_header = "Padmashree Associates"
 admin.site.site_title = "Padmashree Associates"
+admin.site.index_title = 'Administrator Dashboard'
 
 class EquipmentsInline(admin.StackedInline):
     model = Equipments
