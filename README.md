@@ -18,3 +18,5 @@
    $ docker-compose run website sh -c "django-admin.py startproject website ."
                         (or)
    $ sudo docker-compose run website sh -c "django-admin.py startproject website ."
+# Step 5: Creating app usuing docker-compose
+   $ docker-compose run website sh -c "python manage.py startapp equipments"
