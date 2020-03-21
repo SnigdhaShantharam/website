@@ -2,6 +2,7 @@
 
 # Step 1: Clone this repository and
    $ cd website
+   $ git checkout development
 # Step 2: Build Docker image        
         #make sure you navigate to the project directory where the dockerfile is present     
    $ docker build .
