@@ -1,6 +1,6 @@
 from django.db import models
 
-from PIL import Image
+# from PIL import Image
 
 ratings = (
     (1, 1),
@@ -23,6 +23,7 @@ class Camera(models.Model):
         verbose_name = "Camera"
         verbose_name_plural = "Cameras"
 
+
 class Lens(models.Model):
     company         = models.CharField(max_length=50)
     model_name      = models.CharField(max_length=50)
@@ -36,6 +37,7 @@ class Lens(models.Model):
     class Meta:
         verbose_name = "Lens"
         verbose_name_plural = "Lenses"
+
 
 class Accessories(models.Model):
     company         = models.CharField(max_length=50)
@@ -51,6 +53,7 @@ class Accessories(models.Model):
     class Meta:
         verbose_name = "Accessories"
         verbose_name_plural = "Accessories"
+
 
 class Equipments(models.Model):
     camera_key      = models.ForeignKey(Camera, on_delete=models.CASCADE, null=True, blank=True)

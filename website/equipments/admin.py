@@ -11,20 +11,24 @@ class EquipmentsInline(admin.StackedInline):
     fields = ['image']
     extra = 1
 
+
 class CameraAdmin(admin.ModelAdmin):
     inlines = [EquipmentsInline, ]
     list_display = ['company', 'model_name', 'inventory']
     fields = ['company', 'model_name', 'description', 'inventory', 'ratings']
+
 
 class LensAdmin(admin.ModelAdmin):
     inlines = [EquipmentsInline, ]
     list_display = ['company', 'model_name', 'inventory']
     fields = ['company', 'model_name', 'description', 'inventory', 'ratings']
 
+
 class AccessoriesAdmin(admin.ModelAdmin):
     inlines = [EquipmentsInline, ]
     list_display = ['company', 'model_name', 'inventory']
     fields = ['company', 'model_name', 'description', 'inventory', 'ratings']
+
 
 admin.site.register(Camera, CameraAdmin)
 admin.site.register(Lens, LensAdmin)
