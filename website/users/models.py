@@ -33,8 +33,13 @@ class User(AbstractBaseUser, PermissionsMixin):
     """Custom user model that supports phone_number instead of username"""
     phone_regex  = RegexValidator(regex=r'^\+?1?\d{9,15}$', message="Phone number must be entered in the format: '+999999999'. Up to 15 digits allowed.")
     phone_number = models.CharField(validators=[phone_regex], max_length=10, unique=True) # validators should be a list
+    alternative_phone = models.CharField(validators=[phone_regex], max_length=10, blank=True, null=True)
+    reference    = models.CharField(max_length=255, blank=True, null=True)
+    alternative_phone = models.CharField(validators=[phone_regex], max_length=10, blank=True, null=True)
+    reference_phone = models.CharField(validators=[phone_regex], max_length=10, blank=True, null=True)
     first_name   = gismodels.CharField(max_length=255)
     last_name    = gismodels.CharField(max_length=255, blank=True, null=True)
+    email        = models.CharField(max_length=255, blank=True, null=True)
 
     ###################################################################################
     ac = 'Aadhaar card'
@@ -44,13 +49,14 @@ class User(AbstractBaseUser, PermissionsMixin):
     ps = 'Passport'
     
     id_choices = (
-        (ac, 'Aadhaar card'),
-        (dl, 'Driving licence'),
-        (pn, 'Pan card'),
         (rc, 'RC book'),
-        (ps, 'Passport')
+        (ps, 'Passport'),
+        (dl, 'Driving licence'),
+        (ac, 'Aadhaar card'),
+        (pn, 'Pan card'),       
     )
-    id_proof_number = models.CharField(verbose_name='Id Proof number', max_length=20, choices=id_choices, blank=True, null=True)
+    id_proof        = models.CharField(verbose_name="Id proof", choices=id_choices, max_length= 20, blank=True, null=True)
+    id_proof_number = models.CharField(verbose_name='Id Proof number', max_length=20, blank=True, null=True)
     image           = models.ImageField(upload_to=None, height_field=300, width_field=300, max_length=500, blank=True, null=True)
     ###################################################################################
     

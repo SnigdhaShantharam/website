@@ -9,14 +9,14 @@ class UserAdmin(BaseUserAdmin, OSMGeoAdmin):
     ordering = ['id']
     list_display = ['phone_number', 'first_name']
     fieldsets = (
-        (None, {'fields': ('phone_number', 'password')}),
+        (None, {'fields': ('phone_number', 'password', 'alternative_phone', 'reference', 'reference_phone')}),
         (_('Personal Info'), 
             {'fields': 
                 ('first_name', 'last_name', 'address', 'city', 'location')}
             ),
         (_('Proof'), 
             {'fields': 
-                ('id_proof_number','image')}
+                ('id_proof', 'id_proof_number','image')}
             ),
         (
             _('Permissions'),
