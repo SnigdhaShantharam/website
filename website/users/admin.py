@@ -12,7 +12,7 @@ class UserAdmin(BaseUserAdmin, OSMGeoAdmin):
         (None, {'fields': ('phone_number', 'password', 'alternative_phone', 'reference', 'reference_phone')}),
         (_('Personal Info'), 
             {'fields': 
-                ('first_name', 'last_name', 'address', 'city', 'location')}
+                ('first_name', 'last_name', 'email', 'address', 'city', 'location')}
             ),
         (_('Proof'), 
             {'fields': 
