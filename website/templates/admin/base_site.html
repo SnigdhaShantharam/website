@@ -1,0 +1,42 @@
+{% extends "admin/base.html" %}
+{% load static %}
+{% block title %}{{ title }} | Padmashree Associates{% endblock %}
+
+{% block extrastyle %}
+<link rel="shortcut icon" type="image/x-icon" href="img/favicon.png">
+    <style>
+    html{
+        background: aliceblue;
+    }
+    #branding h1, #branding h1 a:link, #branding h1 a:visited {
+    color: azure;
+}
+        #header{
+            background: black;
+        }
+        body.login {
+    background: transparent;
+}
+        #content input[type="submit"]{
+            background: black;
+        }
+        .module caption{
+            background: black;
+        }
+        div.breadcrumbs{
+            background: black;
+        }
+        #container{
+            background: beige;
+        }
+    </style>
+{% endblock %}
+
+{% block branding %}
+<div class="branding" style="display:flex;">
+    <img width="50" height="30" src="{% static 'equipments/img/logo.png' %}" alt="Logo">
+    <h1 id="site-name"><a href="{% url 'admin:index' %}" style="padding:8px;">{{ site_header|default:_('Django administration') }}</a></h1>
+</div>     
+{% endblock %}
+
+{% block nav-global %}{% endblock %}

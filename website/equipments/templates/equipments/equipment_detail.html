@@ -1,0 +1,64 @@
+{% extends './base.html' %}
+
+{% block extra_style %}
+    <style>
+	.header-area {
+    position: absolute;
+    left: 0;
+    right: 0;
+    width: 100%;
+    top: 0;
+    z-index: 9;
+    padding-top: 28px;
+    background: black;
+		}
+	</style>
+{% endblock %}
+
+{% block nav_menu  %}
+    <li><a href="{% url 'home' %}">home</a></li>
+    <li><a href="{% url 'cameralist'%}">cameras</a></li>
+	<li><a href="{% url 'lenslist'%}">lens</a></li>
+    <li><a href="{% url 'accessorieslist'%}">accessories</a></li>
+    <li><a href="contact.html">Contact</a></li>
+{% endblock %}
+
+{% block main_content %}
+        <div class="offers_area">
+        <div class="container">
+			<div class="product_image_area section_padding">
+				<div class="container">
+				  <div class="row s_product_inner" style="padding-top: 115px;">
+					<div class="col-lg-5" style="padding-top: 33px;">
+					  <div class="product_slider_img">
+						<div id="vertical">
+						  <div data-thumb="{{ object.image.url }}" >
+							<img src="{{ object.image.url }}" />
+						  </div>
+						</div>
+					  </div>
+					</div>
+					<div class="col-lg-5 offset-lg-1">
+					  <div class="single_offers">
+						<h3>{{ object.company }} {{ object.model_name }}</h3>
+						&nbsp
+						<h4>Technical description</h4>
+						<ul class="list">
+                            {{ object.description | safe }}
+						</ul>
+						<h2>Rs. {{object.cost}}/day</h2>
+						{% comment %} <a href=""> Availibility: <span style="color:green;">In Stock</span> </a> {% endcomment %}
+                        <div class="card_area">
+						  <div class="add_to_cart">
+							  <a href="#" class="book_now">book now</a>&nbsp
+							  <a href="#" class="book_now">book offline</a>
+						  </div>
+						</div>
+					  </div>
+					</div>
+				  </div>
+				</div>
+			</div>
+        </div>
+    </div>
+{% endblock %}

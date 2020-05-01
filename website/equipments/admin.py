@@ -1,35 +1,25 @@
 from django.contrib import admin
+from django.contrib.auth.models import Group
 
-from .models import Camera, Lens, Accessories, Equipments
+from .models import Equipment
+# Camera, Lens, Accessories, Equipment_Images, 
 
 admin.site.site_header = "Padmashree Associates"
 admin.site.site_title = "Padmashree Associates"
 admin.site.index_title = 'Administrator Dashboard'
 
-class EquipmentsInline(admin.StackedInline):
-    model = Equipments
-    fields = ['image']
-    extra = 1
+# class ImagesInline(admin.StackedInline):
+#     model = Equipment_Images
+#     fields = ['image']
+#     extra = 1
 
+class EquipmentsAdmin(admin.ModelAdmin):
+    # inlines = [ImagesInline, ]
+    readonly_fields = ('slug',)
+    list_display = ['equipment_type', 'company', 'model_name', 'count']
+    fields = ['equipment_type', 'company', 'model_name', 'image', 'description', 'count', 'ratings', 'cost','slug']
 
-class CameraAdmin(admin.ModelAdmin):
-    inlines = [EquipmentsInline, ]
-    list_display = ['company', 'model_name', 'inventory']
-    fields = ['company', 'model_name', 'description', 'inventory', 'ratings']
+admin.site.register(Equipment, EquipmentsAdmin)
+# admin.site.register(Equipment_Images)
 
-
-class LensAdmin(admin.ModelAdmin):
-    inlines = [EquipmentsInline, ]
-    list_display = ['company', 'model_name', 'inventory']
-    fields = ['company', 'model_name', 'description', 'inventory', 'ratings']
-
-
-class AccessoriesAdmin(admin.ModelAdmin):
-    inlines = [EquipmentsInline, ]
-    list_display = ['company', 'model_name', 'inventory']
-    fields = ['company', 'model_name', 'description', 'inventory', 'ratings']
-
-
-admin.site.register(Camera, CameraAdmin)
-admin.site.register(Lens, LensAdmin)
-admin.site.register(Accessories, AccessoriesAdmin)
+admin.site.unregister(Group)

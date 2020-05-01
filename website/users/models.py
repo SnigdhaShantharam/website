@@ -67,6 +67,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     is_active    = gismodels.BooleanField(default=True)
     is_staff     = gismodels.BooleanField(default=False)
 
+    date_created = models.DateTimeField(auto_now=True, editable=False)
 
     objects = UserManager()
 

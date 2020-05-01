@@ -1,0 +1,250 @@
+{% load static %} 
+{% load widget_tweaks %}
+<!Doctype html>
+<html class="no-js" lang="zxx">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Pick your Gears and Gadgets</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- <link rel="manifest" href="site.webmanifest"> -->
+    <link rel="shortcut icon" type="image/x-icon" href="{% static './equipments/img/favicon.png' %}">
+    <!-- Place favicon.ico in the root directory -->
+
+    <!-- CSS here -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <link rel="stylesheet" href="{% static './equipments/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static './equipments/css/owl.carousel.min.css' %}">
+    <link rel="stylesheet" href="{% static './equipments/css/magnific-popup.css' %}">
+    <link rel="stylesheet" href="{% static './equipments/css/font-awesome.min.css' %}">
+    <link rel="stylesheet" href="{% static './equipments/css/themify-icons.css' %}">
+    <link rel="stylesheet" href="{% static './equipments/css/nice-select.css' %}">
+    <link rel="stylesheet" href="{% static './equipments/css/flaticon.css' %}">
+    <link rel="stylesheet" href="{% static './equipments/css/gijgo.css' %}">
+    <link rel="stylesheet" href="{% static './equipments/css/animate.css' %}">
+    <link rel="stylesheet" href="{% static './equipments/css/slicknav.css' %}">
+    <link rel="stylesheet" rel="text/css" href="{% static './equipments/css/style.css' %}">
+    <!-- <link rel="stylesheet" href="css/responsive.css"> -->
+    
+    {% block extra_style %}
+    {% endblock %}
+</head>
+
+<body>
+    <!--[if lte IE 9]>
+            <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience and security.</p>
+        <![endif]-->
+
+    <!-- header-start -->
+    <header>
+        <div class="header-area">
+            <div id="sticky-header" class="main-header-area">
+                <div class="container-fluid p-0">
+                    <div class="row align-items-center no-gutters">
+                        <div class="col-xl-5 col-lg-6">
+                            <div class="main-menu  d-none d-lg-block">
+                            <nav>
+                                <ul id="navigation">
+                                {% block nav_menu  %}
+                                {% endblock %}
+                                        
+                                    </ul>
+                                </nav>
+                            </div>
+                        </div>
+                        <div class="col-xl-2 col-lg-2">
+                            <div class="logo-img">
+                                <a href="index.html">
+                                    <img src="{% static './equipments/img/logo.png' %}" alt="" style="height: 90px;">
+                                </a>
+                            </div>
+                        </div>
+                        <div class="col-xl-5 col-lg-4 d-none d-lg-block">
+                            <div class="book_room">                                
+                                <div class="book_btn d-none d-lg-block">
+									<a class="popup-with-form" href="#test-form">View cart</a>
+                                    {% if user.is_authenticated %}
+                                    <a href="{% url 'logout' %}">Sign out</a>
+                                    {% else %}
+                                    <a class="popup-with-form" href="#test-form">Sign in</a>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="mobile_menu d-block d-lg-none"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+    <!-- header-end -->
+
+ {% block slider_area %}
+ {% endblock %}
+
+    <!-- offers_area_start -->
+    {% block main_content %}
+    {% endblock %}
+    <!-- offers_area_end -->
+
+    <!-- forQuery_start -->
+    <div class="forQuery">
+        <div class="container">
+            <div class="row">
+                <div class="col-xl-10 offset-xl-1 col-md-12">
+                    <div class="Query_border">
+                        <div class="row align-items-center justify-content-center">
+                            <div class="col-xl-6 col-md-6">
+                                <div class="Query_text">
+                                    <p>For Booking 0r Query?</p>
+                                </div>
+                            </div>
+                            <div class="col-xl-6 col-md-6">
+                                <div class="phone_num">
+                                    <a href="#" class="mobile_no">+91 95 352 62359</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- forQuery_end-->
+
+    <!-- footer -->
+    <footer class="footer">
+        <div class="footer_top">
+            <div class="container">
+				<div class="row">
+					<div class="col-xl-3 col-md-6 col-lg-3">
+                        
+                    </div>
+                    <div class="col-xl-3 col-md-6 col-lg-3">
+                        <div class="footer_widget">
+                            <h3 class="footer_title">
+                                address
+                            </h3>
+                            <p class="footer_text"> #1858/S, 1st 'G' Main Road <br>
+								2nd Stage Rajajinagar<br>
+                                Bengaluru - 560 010</p>
+                            <a href="#" class="line-button">Get Direction</a>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-md-6 col-lg-3">
+                        <div class="footer_widget">
+                            <h3 class="footer_title">
+                                
+                            </h3>
+                            <p class="footer_text">+91 953 526 2359 <br>
+                                shantharamana@gmail.com</p>
+                        </div>
+                    </div>
+                    <div class="col-xl-2 col-md-6 col-lg-2">
+                        <div class="footer_widget">
+                            <h3 class="footer_title">
+                                Navigation
+                            </h3>
+                            <ul>
+                                <li><a href="index.html">Home</a></li>
+                                <li><a href="cameras.html">Cameras</a></li>
+                                <li><a href="lens.html">Lenses</a></li>
+                                <li><a href="accessories.html">Accessories</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="copy-right_text">
+            <div class="container">
+                <div class="footer_border"></div>
+                <div class="row">
+                    <div class="col-xl-8 col-md-7 col-lg-9">
+                        <p class="copy_right">
+                            <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
+<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- link that opens popup -->
+
+    <!-- form itself end-->
+        <div id="test-form" class="white-popup-block mfp-hide">
+                <div class="popup_box ">
+                <h2>Sign in</h2>
+                        <div class="popup_inner">                       
+                            <form action={% url 'login' %} method="POST">
+                                {% csrf_token %}
+                                    <input type="text" name="phone_number" placeholder="phone number" class="nice-select form-select wide">
+                                    <input type="password" name="password" placeholder="password" class="nice-select form-select wide">
+                                <div class="col-xl-12">
+                                    <button type="submit" class="boxed-btn3">Sign in</button>&nbsp
+                                    <a href="{% url 'signup' %}" class="boxed-btn3">Sign up</a>
+                                </div>
+                            </form>
+                            
+                        </div>
+                    </div>
+            </div>
+    <!-- form itself end -->
+
+    <!-- JS here -->
+    <script src="{% static './equipments/js/vendor/modernizr-3.5.0.min.js' %}"></script>
+    <script src="{% static './equipments/js/vendor/jquery-1.12.4.min.js' %}"></script>
+    <script src="{% static './equipments/js/popper.min.js' %}"></script>
+    <script src="{% static './equipments/js/bootstrap.min.js' %}"></script>
+    <script src="{% static './equipments/js/owl.carousel.min.js' %}"></script>
+    <script src="{% static './equipments/js/isotope.pkgd.min.js' %}"></script>
+    <script src="{% static './equipments/js/ajax-form.js' %}"></script>
+    <script src="{% static './equipments/js/waypoints.min.js' %}"></script>
+    <script src="{% static './equipments/js/jquery.counterup.min.js' %}"></script>
+    <script src="{% static './equipments/js/imagesloaded.pkgd.min.js' %}"></script>
+    <script src="{% static './equipments/js/scrollIt.js' %}"></script>
+    <script src="{% static './equipments/js/jquery.scrollUp.min.js' %}"></script>
+    <script src="{% static './equipments/js/wow.min.js' %}"></script>
+    <script src="{% static './equipments/js/nice-select.min.js' %}"></script>
+    <script src="{% static './equipments/js/jquery.slicknav.min.js' %}"></script>
+    <script src="{% static './equipments/js/jquery.magnific-popup.min.js' %}"></script>
+    <script src="{% static './equipments/js/plugins.js' %}"></script>
+    <script src="{% static './equipments/js/gijgo.min.js' %}"></script>
+
+    <!--contact js-->
+    <script src="{% static './equipments/js/contact.js' %}"></script>
+    <script src="{% static './equipments/js/jquery.ajaxchimp.min.js' %}"></script>
+    <script src="{% static './equipments/js/jquery.form.js' %}"></script>
+    <script src="{% static './equipments/js/jquery.validate.min.js' %}"></script>
+    <script src="{% static './equipments/js/mail-script.js' %}"></script>
+
+    <script src="{% static './equipments/js/main.js' %}"></script>
+    <script>
+        $('#datepicker').datepicker({
+            iconsLibrary: 'fontawesome',
+            icons: {
+             rightIcon: '<span class="fa fa-caret-down"></span>'
+         }
+        });
+        $('#datepicker2').datepicker({
+            iconsLibrary: 'fontawesome',
+            icons: {
+             rightIcon: '<span class="fa fa-caret-down"></span>'
+         }
+
+        });
+    </script>
+
+
+
+</body>
+
+</html>

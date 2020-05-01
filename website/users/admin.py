@@ -8,6 +8,7 @@ from users import models
 class UserAdmin(BaseUserAdmin, OSMGeoAdmin):
     ordering = ['id']
     list_display = ['phone_number', 'first_name']
+    readonly_fields = ('date_created',)
     fieldsets = (
         (None, {'fields': ('phone_number', 'password', 'alternative_phone', 'reference', 'reference_phone')}),
         (_('Personal Info'), 
@@ -22,8 +23,9 @@ class UserAdmin(BaseUserAdmin, OSMGeoAdmin):
             _('Permissions'),
                 {'fields': ('is_active', 'is_staff', 'is_superuser')}
         ),
-        (_('Important dates'), {'fields': ('last_login',)})
+        (_('Important dates'), {'fields': ('last_login', 'date_created')})
     )
+    
     add_fieldsets = (
         (None, {
             'classes': ('wide',),

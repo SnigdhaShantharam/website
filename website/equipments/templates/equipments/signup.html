@@ -1,0 +1,33 @@
+{% extends './base.html' %}
+
+{% block nav_menu  %}
+    <li><a class="active" href="{% url 'home' %}">home</a></li>
+    <li><a href="{% url 'cameralist'%}">cameras</a></li>
+	<li><a href="{% url 'lenslist'%}">lens</a></li>
+    <li><a href="{% url 'accessorieslist'%}">accessories</a></li>
+    <li><a href="contact.html">Contact</a></li>
+    <!--<li><a href="#">blog <i class="ti-angle-down"></i></a>
+    <ul class="submenu">
+    <li><a href="blog.html">blog</a></li>
+    <li><a href="single-blog.html">single-blog</a></li>
+    </ul>
+    </li>-->                         
+{% endblock %}
+
+{% block main_content %}
+<!-- Start Sample Area -->
+	<section class="sample-text-area">
+		<div class="container box_1170">
+			<h2 class="text-heading">Sign-up</h2>
+      <div class="form_class>
+      <form method="post">
+                  {% csrf_token %}
+                  {{ form.as_p }}
+                  <button type="submit" class="boxed-btn3">Sign up</button>
+          </form>
+      </div>
+		</div>
+	</section>
+	<!-- End Sample Area -->
+
+{% endblock %}
