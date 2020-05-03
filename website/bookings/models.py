@@ -34,18 +34,7 @@ class Event(models.Model):
     def __str__(self):
         return '{} - {}'.format(self.customer.first_name, self.equipment_key)
 
-    # def save(self, *args, **kwargs):
-    #     # if inventory is None:
-    #     #     self.inventory = 0
-    #     # self.inventory = inventory
-    #     if self.inventory is None:
-    #         self.inventory = (self.equipment_key.inventory - 1)
-    #     # else:
-    #     #     self.inventory = inventory
-    #     super(Event, self).save(*args, **kwargs)
-
     def check_availability(self, fixed_startday, fixed_starttime, fixed_endday, fixed_endtime, new_startday, new_starttime, new_endday, new_endtime, inventory):
-        # overlap = False
         availability = True
         if new_startday == fixed_endday or new_endday == fixed_startday:  # edge case
             print("1")
@@ -117,14 +106,12 @@ class Event(models.Model):
     def clean(self):
         if self.end_day < self.start_day:
             raise ValidationError('Please check the starting and ending dates')
-
         # event = Event.objects.filter(start_day=self.start_day).order_by('-id')[0]
         # events = Event.objects.filter(start_day=self.start_day).order_by('-id')
         events = Event.objects.filter(
             Q(start_day__exact=self.start_day, equipment_key=self.equipment_key)|
             Q(start_day__exact=self.end_day, equipment_key=self.equipment_key)
         ).order_by('-id')
-        # print(events)
         if events:
             for event in events:
                 availability= self.check_availability(event.start_day, event.start_time, event.end_day, event.end_time, self.start_day, self.start_time, self.end_day, self.end_time, event.inventory)
@@ -133,9 +120,3 @@ class Event(models.Model):
                     raise ValidationError(
                         'There is an overlap with another event: ' + str(event.start_day) + ', ' + str(
                             event.start_time) + '-' + str(event.end_time))
-                # if availability is True:
-                #     self.save()
-                # else:
-                #     raise ValidationError(
-                #         'There is an overlap with another event: ' + str(event.start_day) + ', ' + str(
-                #             event.start_time) + '-' + str(event.end_time))
