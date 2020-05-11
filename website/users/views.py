@@ -11,6 +11,7 @@ from rest_framework.response import Response
 from rest_framework import status
 
 from users.forms import SignUpForm, CustomAuthForm
+from .models import User
 
 def user_login(request):
     if request.method == 'POST':
@@ -49,7 +50,7 @@ def signup(request):
             return redirect("signup")
     else:
         form = SignUpForm()
-    return render(request, 'equipments/signup.html', {'form': form})
+        return render(request, 'equipments/signup.html', {'form': form})
 
 def user_logout(request):
     try:
@@ -60,3 +61,6 @@ def user_logout(request):
     except Exception as e:
         print(e)
        
+def contact(request):
+    map = User.objects.filter(pk=1).first()
+    print(map.location)

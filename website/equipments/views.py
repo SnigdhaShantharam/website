@@ -39,10 +39,10 @@ class LensList(ListView):
     '''
     Summary:
         --------
-            get the list of available cameras.
+            get the list of available lens.
         Methods:
         --------
-            get: list of available cameras.
+            get: list of available lens.
     '''
     model = Equipment
     
@@ -59,10 +59,10 @@ class AccessoriesList(ListView):
     '''
     Summary:
         --------
-            get the list of available cameras.
+            get the list of available Accessories.
         Methods:
         --------
-            get: list of available cameras.
+            get: list of available Accessories.
     '''
     model = Equipment
     
@@ -76,7 +76,6 @@ class AccessoriesList(ListView):
 
 class EquipmentDetailView(DetailView):
 
-    # model = Equipment
     queryset = Equipment.objects.all()
 
     def get_object(self):

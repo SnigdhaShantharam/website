@@ -12,6 +12,7 @@ class BookingsAdmin(admin.ModelAdmin):
 
     list_display = ['customer', 'equipment_key', 'start_day', 'end_day', 'booking_type']
     list_per_page = 15
+    # search_fields = ['customer', 'booking_type']
     change_list_template = 'admin/bookings/change_list.html'
  
     def changelist_view(self, request, extra_context=None):
@@ -40,7 +41,7 @@ class BookingsAdmin(admin.ModelAdmin):
  
         extra_context['previous_month'] = reverse('admin:bookings_event_changelist') + '?start_day__gte=' + str(previous_month)
         extra_context['next_month'] = reverse('admin:bookings_event_changelist') + '?startday__gte=' + str(next_month)
-        print(extra_context)
+        # print(extra_context)
         # cal = HTMLCalendar()
         html_calendar = cal.formatmonth(d.year, d.month, withyear=True)
         html_calendar = html_calendar.replace('<td ', '<td  width="150" height="150"')

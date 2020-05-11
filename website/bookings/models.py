@@ -5,6 +5,10 @@ from django.contrib.contenttypes.models import ContentType
 from django.urls import reverse
 from django.core.validators import MaxValueValidator, MinValueValidator 
 # from django.contrib.auth.models import User
+from django.conf import settings
+from django.contrib.contenttypes.fields import GenericForeignKey
+from django.contrib.contenttypes.models import ContentType
+from django.utils.translation import ugettext_lazy as _
 
 from website.settings import AUTH_USER_MODEL
 from equipments.models import Equipment
@@ -13,7 +17,6 @@ booking_type = (
     (1, 'Online Booking'),
     (2, 'Offline Booking')
 )
-
 
 class Event(models.Model):
     customer = models.ForeignKey(AUTH_USER_MODEL, on_delete=models.CASCADE)
@@ -120,3 +123,4 @@ class Event(models.Model):
                     raise ValidationError(
                         'There is an overlap with another event: ' + str(event.start_day) + ', ' + str(
                             event.start_time) + '-' + str(event.end_time))
+
