@@ -24,6 +24,7 @@ from users.views import user_logout
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('equipments.urls')),
+    path('book/', include('bookings.urls')),
     path('users/', include('users.urls')),
     path('signout', user_logout, name='logout')
     # path('logout', auth_views.LogoutView.as_view(), name='logout'),

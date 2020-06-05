@@ -6,7 +6,7 @@ from calendar import HTMLCalendar
 from django.utils.safestring import mark_safe
 
 from .utils import EventCalendar
-from .models import Event
+from .models import Event, EnquiryItem, EnquiryCart
 
 class BookingsAdmin(admin.ModelAdmin):
 
@@ -50,4 +50,5 @@ class BookingsAdmin(admin.ModelAdmin):
  
 
 admin.site.register(Event, BookingsAdmin)
-# admin.site.register(Event)
+admin.site.register(EnquiryItem)
+admin.site.register(EnquiryCart)

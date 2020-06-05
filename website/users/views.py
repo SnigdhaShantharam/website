@@ -13,7 +13,9 @@ from rest_framework import status
 from users.forms import SignUpForm, CustomAuthForm
 from .models import User
 
-def user_login(request):
+
+def user_login(request, value):
+    
     if request.method == 'POST':
         phone_number = request.POST.get('phone_number')
         password = request.POST.get('password')
@@ -22,7 +24,10 @@ def user_login(request):
             if user.is_active:
                 login(request,user)
                 # return HttpResponse("Login successfull.", status=status.HTTP_200_OK)
-                return redirect('home')
+                if value == 'cart':
+                    return redirect('view_cart')
+                elif value == ' ':
+                    return redirect('home')
             else:
                 return HttpResponse("Account not verified.", status=status.HTTP_400_BAD_REQUEST)
         else:
@@ -50,7 +55,7 @@ def signup(request):
             return redirect("signup")
     else:
         form = SignUpForm()
-        return render(request, 'equipments/signup.html', {'form': form})
+        return render(request, 'equipments/signup.html', {'heading':'Registration form', 'form': form})
 
 def user_logout(request):
     try:

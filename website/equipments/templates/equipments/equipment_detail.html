@@ -1,5 +1,5 @@
 {% extends './base.html' %}
-
+{% load crispy_forms_tags %}
 {% block extra_style %}
     <style>
 	.header-area {
@@ -12,15 +12,19 @@
     padding-top: 28px;
     background: black;
 		}
-	</style>
-{% endblock %}
 
-{% block nav_menu  %}
-    <li><a href="{% url 'home' %}">home</a></li>
-    <li><a href="{% url 'cameralist'%}">cameras</a></li>
-	<li><a href="{% url 'lenslist'%}">lens</a></li>
-    <li><a href="{% url 'accessorieslist'%}">accessories</a></li>
-    <li><a href="contact.html">Contact</a></li>
+	#availability-form{
+	display: flex;
+    justify-content: center;
+	}
+	.popup_box {
+    background: #fff;
+    display: inline-block;
+    z-index: 9;
+    width: 500px;
+    padding: 56px 35px;
+}
+	</style>
 {% endblock %}
 
 {% block main_content %}
@@ -29,6 +33,15 @@
 			<div class="product_image_area section_padding">
 				<div class="container">
 				  <div class="row s_product_inner" style="padding-top: 115px;">
+				    <div class="col-xl-12" style="padding-top: 30px;">
+						{% if messages %}
+								{% for message in messages %}
+									<div class="alert alert-{{ message.tags }}">
+									{{ message }}
+									</div>
+								{% endfor%}
+						{% endif %}
+    				</div>
 					<div class="col-lg-5" style="padding-top: 33px;">
 					  <div class="product_slider_img">
 						<div id="vertical">
@@ -50,8 +63,10 @@
 						{% comment %} <a href=""> Availibility: <span style="color:green;">In Stock</span> </a> {% endcomment %}
                         <div class="card_area">
 						  <div class="add_to_cart">
-							  <a href="#" class="book_now">book now</a>&nbsp
-							  <a href="#" class="book_now">book offline</a>
+						  	  <a class=" book_now popup-with-form" href="#availability-form">Check Availibility</a>
+						  	  {% comment %} <a href="{% url 'availability' slug=object.slug %}" class="book_now">Check Availibility</a>&nbsp {% endcomment %}
+                        	  <a href="{% url 'add-to-cart' slug=object.slug %}" class="book_now">Add to enquiry cart</a>
+							  {% comment %} <a href="#" class="book_now">Query now</a> {% endcomment %}
 						  </div>
 						</div>
 					  </div>
@@ -61,4 +76,54 @@
 			</div>
         </div>
     </div>
+
+<div id="availability-form" class="white-popup-block mfp-hide">
+        <div class="popup_box ">
+                <div class="popup_inner">
+                    <h3>Check Availability</h3>
+					<div id="result">
+								{% if messages %}
+									{% for message in messages %}
+										<div class="alert alert-{{ message.tags }}">
+										{{ message }}
+										</div>
+									{% endfor%}
+								{% endif %}
+							</div>
+                    <form method="POST" action="{% url 'availability' slug=object.slug pk=object.pk%}">
+                        <div class="row">
+                            {% csrf_token %}
+							<div class="col-xl-12">
+                                <input id="datepicker" name="start_date" placeholder="Start date" required>
+                            </div>
+                            <div class="col-xl-12">
+                                <input id="datepicker2" name="end_date" placeholder="End date" required>
+                            </div>
+
+							</div>
+							<div class="col-xl-12">&nbsp &nbsp
+							<button id="loadbasic" class="boxed-btn3">Check Availability</button>
+								{% comment %} <button type="submit" class="boxed-btn3">Check Availability</button> {% endcomment %}
+                            </div>  
+                        </div>
+                    </form>
+                </div>
+            </div>
+    </div>
+{% endblock %}
+
+{% block extra_script %}
+$(function() {
+  // don't cache ajax or content won't be fresh
+  $.ajaxSetup({
+    cache: false
+  });
+  // load() functions
+  var loadUrl = "{% url 'availability' slug=object.slug pk=object.pk%}";
+  $("#loadbasic").click(function() {
+    document.getElementById('availability-form').innerHTML = loadUrl;
+  });
+  // end  
+});
+
 {% endblock %}

@@ -5,18 +5,23 @@ from django.contrib.contenttypes.models import ContentType
 from django.urls import reverse
 from django.core.validators import MaxValueValidator, MinValueValidator 
 # from django.contrib.auth.models import User
-from django.conf import settings
-from django.contrib.contenttypes.fields import GenericForeignKey
-from django.contrib.contenttypes.models import ContentType
+from django.core.validators import RegexValidator
 from django.utils.translation import ugettext_lazy as _
 
 from website.settings import AUTH_USER_MODEL
 from equipments.models import Equipment
+# from .utils import check_availability
 
 booking_type = (
     (1, 'Online Booking'),
     (2, 'Offline Booking')
 )
+# class Enquiry(models.Model):
+#     phone_regex  = RegexValidator(regex=r'^\+?1?\d{9,15}$', message="Phone number must be entered in the format: '9999999999'. Up to 15 digits allowed.")
+#     phone_number = models.CharField(validators=[phone_regex], max_length=10, unique=True)
+#     gears_list = models.ManyToManyField(Equipment, verbose_name="Equipments to query")
+#     start_date = models.DateField()
+#     end_date = models.DateField()
 
 class Event(models.Model):
     customer = models.ForeignKey(AUTH_USER_MODEL, on_delete=models.CASCADE)
@@ -124,3 +129,30 @@ class Event(models.Model):
                         'There is an overlap with another event: ' + str(event.start_day) + ', ' + str(
                             event.start_time) + '-' + str(event.end_time))
 
+class EnquiryItem(models.Model):
+    '''
+        1. EnquiryItem(orderitem) is basically a linking between the equipments(items that can be ordered or enquired) 
+        and the EnquiryCart(order).
+        2. This model used to hold the enqiry items in general.
+        3. Each of the item in this table is a part of an order/cart.
+    '''
+    customer = models.ForeignKey(AUTH_USER_MODEL, on_delete=models.CASCADE, blank=True, null=True)
+    ordered  = models.BooleanField(default=False)
+    item = models.ForeignKey(Equipment, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return '{} {}'.format(self.item.company, self.item.model_name)
+
+class EnquiryCart(models.Model):
+    '''
+        This model holds the cart items for each user.
+        Also has boolean field indicating if the order is placed or not.
+    '''
+    customer = models.ForeignKey(AUTH_USER_MODEL,default=None, on_delete=models.CASCADE)
+    items    = models.ManyToManyField(EnquiryItem)
+    date_created = models.DateTimeField(auto_now=True)
+    enquiry_date = models.DateTimeField()
+    ordered  = models.BooleanField(default=False)
+
+    def __str__(self):
+        return self.customer.first_name

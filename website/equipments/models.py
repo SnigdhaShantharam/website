@@ -40,6 +40,16 @@ class Equipment(models.Model):
         }
         return reverse('gadgets-pk-slug-detail', kwargs=kwargs)
 
+    def get_add_to_cart_url(self):
+        return reverse("add-to-cart", kwargs={
+            'slug': self.slug
+        })
+    
+    def get_remove_from_cart_url(self):
+        return reverse("remove-from-cart", kwargs={
+            'slug': self.slug
+        })
+
     def save(self, *args, **kwargs):
         value = self.company + self.model_name
         self.slug = slugify(value, allow_unicode=True)

@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.views.generic.list import ListView
 from django.views.generic.detail import DetailView
+from django.contrib.sessions.models import Session
 
 from rest_framework.views import APIView
 from rest_framework.response import Response
@@ -9,6 +10,9 @@ from rest_framework import status
 from .models import Equipment
 # , Equipment_Images
 
+def contact(request):
+    if request.method == 'GET':
+        return render(request, 'equipments/contact.html')
 
 def index(request):
     if request.method == 'GET':
@@ -74,6 +78,7 @@ class AccessoriesList(ListView):
         }
         return context
 
+
 class EquipmentDetailView(DetailView):
 
     queryset = Equipment.objects.all()
@@ -82,3 +87,8 @@ class EquipmentDetailView(DetailView):
         obj = super().get_object()
         # print(obj)
         return obj
+
+# class Contact(APIView):
+
+#     def get(self, request):
+#         return render(request, 'equipment/contact.html')

@@ -1,5 +1,5 @@
 {% extends './base.html' %}
-
+{% load crispy_forms_tags %}
 {% block extra_style %}
     <style>
 	.header-area {
@@ -15,26 +15,20 @@
     </style>
 {% endblock %}
 
-{% block nav_menu  %}
-    <li><a href="{% url 'home' %}">home</a></li>
-    <li><a href="{% url 'cameralist'%}">cameras</a></li>
-	<li><a href="{% url 'lenslist'%}">lens</a></li>
-    <li><a href="{% url 'accessorieslist'%}">accessories</a></li>
-    <li><a href="contact.html">Contact</a></li>
-    <!--<li><a href="#">blog <i class="ti-angle-down"></i></a>
-    <ul class="submenu">
-    <li><a href="blog.html">blog</a></li>
-    <li><a href="single-blog.html">single-blog</a></li>
-    </ul>
-    </li>-->                         
-{% endblock %}
- {% block slider_area %}
- {% endblock %}
 {% block main_content %}
 
     <div class="offers_area">
         <div class="container">
             <div class="row">
+            <div class="col-xl-12" style="padding-top: 30px;">
+						{% if messages %}
+								{% for message in messages %}
+									<div class="alert alert-{{ message.tags }}">
+									{{ message }}
+									</div>
+								{% endfor%}
+						{% endif %}
+    				</div>
                 <div class="col-xl-12">
                     <div class="section_title text-center mb-100">
                         <!--<span>Our Offers</span>-->
@@ -50,13 +44,15 @@
                         <div class="about_thumb">
                             <a href="{% url 'equipment-detail' slug=article.slug %}"><img src="{{ article.image.url }}" alt="img not found"></a>
                         </div>
-                        <h2>{{ article.model_name }}<br>
-                            {{ article.company }}</h2>
+                        <h2>{{ article.company }}<br>
+                            {{ article.model_name }}</h2>
+                            
                         <ul>
                             {{ article.description | safe }}
-                        </ul>
-                        <a href="#" class="book_now">book now</a>
-						<a href="#" class="book_now">book offline</a>
+                        </ul> 
+						{% comment %} <a class=" book_now popup-with-form" href="#availability-form">Check Availibility</a> {% endcomment %}
+                        <a href="{% url 'add-to-cart' slug=article.slug %}" class="book_now">Add to enquiry cart</a>
+						{% comment %} <a href="#" class="book_now">book offline</a> {% endcomment %}
                     </div>
                 </div>
             {% endfor %}

@@ -43,7 +43,8 @@ INSTALLED_APPS = [
     'django.contrib.gis',
     'ckeditor',
     'ckeditor_uploader',
-    'widget_tweaks',
+    'crispy_forms',
+    # 'widget_tweaks',
 
     #user apps
     'equipments.apps.EquipmentsConfig',

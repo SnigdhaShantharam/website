@@ -1,5 +1,6 @@
-{% load static %} 
-{% load widget_tweaks %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% comment %} {% load widget_tweaks %} {% endcomment %}
 <!Doctype html>
 <html class="no-js" lang="zxx">
 
@@ -13,7 +14,7 @@
     <!-- <link rel="manifest" href="site.webmanifest"> -->
     <link rel="shortcut icon" type="image/x-icon" href="{% static './equipments/img/favicon.png' %}">
     <!-- Place favicon.ico in the root directory -->
-
+    <script src="https://code.iconify.design/1/1.0.6/iconify.min.js"></script>
     <!-- CSS here -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
@@ -49,8 +50,21 @@
                             <div class="main-menu  d-none d-lg-block">
                             <nav>
                                 <ul id="navigation">
-                                {% block nav_menu  %}
-                                {% endblock %}
+                                <li><a href="{% url 'home' %}">home</a></li>
+                                <li><a href="{% url 'cameralist'%}">cameras</a></li>
+                                <li><a href="{% url 'lenslist'%}">lens</a></li>
+                                <li><a href="{% url 'accessorieslist'%}">accessories</a></li>
+                                {% comment %} <li><a href="{% url 'contact' %}">Contact</a></li>
+                                {% if request.user.is_superuser %}
+                                <li><a href="#">Administration<i class="ti-angle-down"></i></a>
+                                    <ul class="submenu">
+                                    <li><a href="#">View Customers</a></li>
+                                    <li><a href="#">View orders</a></li>
+                                    </ul>
+                                </li>
+                                {% endif %} {% endcomment %}
+                                {% comment %} {% block nav_menu  %}
+                                {% endblock %} {% endcomment %}
                                         
                                     </ul>
                                 </nav>
@@ -66,7 +80,7 @@
                         <div class="col-xl-5 col-lg-4 d-none d-lg-block">
                             <div class="book_room">                                
                                 <div class="book_btn d-none d-lg-block">
-									<a class="popup-with-form" href="#test-form">View cart</a>
+									<a href="{% url 'view_cart' %}">View cart</a>
                                     {% if user.is_authenticated %}
                                     <a href="{% url 'logout' %}">Sign out</a>
                                     {% else %}
@@ -184,13 +198,14 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
                 <div class="popup_box ">
                 <h2>Sign in</h2>
                         <div class="popup_inner">                       
-                            <form action={% url 'login' %} method="POST">
-                                {% csrf_token %}
-                                    <input type="text" name="phone_number" placeholder="phone number" class="nice-select form-select wide">
-                                    <input type="password" name="password" placeholder="password" class="nice-select form-select wide">
+                            <form action="{% url 'login' value=' ' %}" method="POST">
                                 <div class="col-xl-12">
-                                    <button type="submit" class="boxed-btn3">Sign in</button>&nbsp
-                                    <a href="{% url 'signup' %}" class="boxed-btn3">Sign up</a>
+                                    {% csrf_token %}
+                                    <input type="text" placeholder="Enter registered phone number" name="phone_number" class="nice-select form-select wide" required>
+                                    <input type="password" placeholder="Enter Password" name="password" class="nice-select form-select wide" required>
+                                    <button type="submit" class="boxed-btn3">login</button>
+                                    <p> or </p>
+                                    <a href="{% url 'signup' %}" class="boxed-btn3">Register</a>
                                 </div>
                             </form>
                             
@@ -229,12 +244,14 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
     <script src="{% static './equipments/js/main.js' %}"></script>
     <script>
         $('#datepicker').datepicker({
+            format : "yyyy-mm-dd",
             iconsLibrary: 'fontawesome',
             icons: {
              rightIcon: '<span class="fa fa-caret-down"></span>'
          }
         });
         $('#datepicker2').datepicker({
+            format : "yyyy-mm-dd",
             iconsLibrary: 'fontawesome',
             icons: {
              rightIcon: '<span class="fa fa-caret-down"></span>'
@@ -242,8 +259,8 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
 
         });
     </script>
-
-
+{% block extra_script%}
+{% endblock %}
 
 </body>
 
