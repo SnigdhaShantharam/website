@@ -81,18 +81,12 @@
         <div class="popup_box ">
                 <div class="popup_inner">
                     <h3>Check Availability</h3>
-					<div id="result">
-								{% if messages %}
-									{% for message in messages %}
-										<div class="alert alert-{{ message.tags }}">
-										{{ message }}
-										</div>
-									{% endfor%}
-								{% endif %}
-							</div>
-                    <form method="POST" action="{% url 'availability' slug=object.slug pk=object.pk%}">
+					
+                    <form method="POST" action="{% url 'availability' slug=object.slug pk=object.pk%}" id="availForm">
                         <div class="row">
                             {% csrf_token %}
+							<input type="hidden" id="previous_page" name="previous_page" 
+    							value="/{{ object.slug }}/">
 							<div class="col-xl-12">
                                 <input id="datepicker" name="start_date" placeholder="Start date" required>
                             </div>
@@ -113,17 +107,5 @@
 {% endblock %}
 
 {% block extra_script %}
-$(function() {
-  // don't cache ajax or content won't be fresh
-  $.ajaxSetup({
-    cache: false
-  });
-  // load() functions
-  var loadUrl = "{% url 'availability' slug=object.slug pk=object.pk%}";
-  $("#loadbasic").click(function() {
-    document.getElementById('availability-form').innerHTML = loadUrl;
-  });
-  // end  
-});
 
 {% endblock %}

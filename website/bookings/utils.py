@@ -2,6 +2,8 @@ from calendar import HTMLCalendar
 from datetime import datetime as dtime, date, time
 import datetime
 
+from django.core.mail import EmailMultiAlternatives, send_mail
+from django.template.loader import render_to_string
 # from .utils import EventCalendar
 from .models import Event
  
@@ -62,40 +64,6 @@ class EventCalendar(HTMLCalendar):
 
 def check_availability(fixed_startday, fixed_endday, new_startday, new_endday, inventory):
     availability = True
-    # if new_startday == fixed_endday or new_endday == fixed_startday:  # edge case
-    #     print("1")
-    #     new_starttime = new_starttime.hour*60 + new_starttime.minute
-    #     new_endtime = new_endtime.hour*60 + new_endtime.minute
-    #     fixed_starttime = fixed_starttime.hour*60 + fixed_starttime.minute
-    #     fixed_endtime = fixed_endtime.hour*60 + fixed_endtime.minute
-
-    #     if (new_starttime - fixed_endtime)/60 >= 3.0:
-    #         print("1--1")
-    #         if inventory == 0:
-    #             print("1--1-->1")
-    #             availability = False
-    #         elif inventory is None:
-    #             print("1--1-->2")
-    #             availability = True
-    #         elif inventory > 0:
-    #             availability = True
-    #             print("1--1-->3")
-    #             inventory -= 1
-    #     elif (fixed_starttime - new_endtime)/60 >= 3.0:
-    #         print("1--2")
-    #         if inventory == 0:
-    #             print("1--2-->1")
-    #             availability = False
-    #         elif inventory is None:
-    #             print("1--2-->2")
-    #             availability = True
-    #         elif inventory > 0:
-    #             availability = True
-    #             print("1--2-->3")
-    #             inventory -= 1
-    #     else:
-    #         availability = False
-    #         print("1--3")
     if (new_startday >= fixed_startday and new_startday <= fixed_endday) or (new_endday >= fixed_startday and new_endday <= fixed_endday):  # innner limits
             # overlap = True
         print("2")
@@ -124,3 +92,14 @@ def check_availability(fixed_startday, fixed_endday, new_startday, new_endday, i
             print("3--3")
 
     return availability
+
+def send_enquiry_mail(request, obj):
+    subject, from_email, to = 'hello', 'fundoonotes27@gmail.com', 'shantaramana@gmail.com'
+    message = render_to_string('bookings/email.html', {
+                    'customer_name': request.POST['Firstname'] + ' ' + request.POST['Lastname'],
+                    'phone_num': request.POST['phone_num'],
+                    'start_date': request.POST['start_date'],
+                    'end_date': request.POST['end_date'],
+                    # 'enquiry': obj
+                })
+    send_mail(subject, None, from_email, [to], html_message=message)

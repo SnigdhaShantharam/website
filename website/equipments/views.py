@@ -85,7 +85,6 @@ class EquipmentDetailView(DetailView):
 
     def get_object(self):
         obj = super().get_object()
-        # print(obj)
         return obj
 
 # class Contact(APIView):

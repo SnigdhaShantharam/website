@@ -18,8 +18,8 @@
 	<section class="sample-text-area">
 		<div class="container box_1170">
 			<h2 class="text-heading">{{ heading }}</h2>
-      <div class="form_class>
-      <form method="post">
+      <div class="form_class">
+      <form method="POST">
                   {% csrf_token %}
                   {{ form.as_p }}
                   <button type="submit" class="boxed-btn3">Submit</button>
