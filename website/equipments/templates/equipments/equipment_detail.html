@@ -1,0 +1,111 @@
+{% extends './base.html' %}
+{% load crispy_forms_tags %}
+{% block extra_style %}
+    <style>
+	.header-area {
+    position: absolute;
+    left: 0;
+    right: 0;
+    width: 100%;
+    top: 0;
+    z-index: 9;
+    padding-top: 28px;
+    background: black;
+		}
+
+	#availability-form{
+	display: flex;
+    justify-content: center;
+	}
+	.popup_box {
+    background: #fff;
+    display: inline-block;
+    z-index: 9;
+    width: 500px;
+    padding: 56px 35px;
+}
+	</style>
+{% endblock %}
+
+{% block main_content %}
+        <div class="offers_area">
+        <div class="container">
+			<div class="product_image_area section_padding">
+				<div class="container">
+				  <div class="row s_product_inner" style="padding-top: 115px;">
+				    <div class="col-xl-12" style="padding-top: 30px;">
+						{% if messages %}
+								{% for message in messages %}
+									<div class="alert alert-{{ message.tags }}">
+									{{ message }}
+									</div>
+								{% endfor%}
+						{% endif %}
+    				</div>
+					<div class="col-lg-5" style="padding-top: 33px;">
+					  <div class="product_slider_img">
+						<div id="vertical">
+						  <div data-thumb="{{ object.image.url }}" >
+							<img src="{{ object.image.url }}" />
+						  </div>
+						</div>
+					  </div>
+					</div>
+					<div class="col-lg-5 offset-lg-1">
+					  <div class="single_offers">
+						<h3>{{ object.company }} {{ object.model_name }}</h3>
+						&nbsp
+						<h4>Technical description</h4>
+						<ul class="list">
+                            {{ object.description | safe }}
+						</ul>
+						<h2>Rs. {{object.cost}}/day</h2>
+						{% comment %} <a href=""> Availibility: <span style="color:green;">In Stock</span> </a> {% endcomment %}
+                        <div class="card_area">
+						  <div class="add_to_cart">
+						  	  <a class=" book_now popup-with-form" href="#availability-form">Check Availibility</a><br>
+						  	  {% comment %} <a href="{% url 'availability' slug=object.slug %}" class="book_now">Check Availibility</a>&nbsp {% endcomment %}
+                        	  <a href="{% url 'add-to-cart' slug=object.slug %}" class="book_now">Add to enquiry cart</a>
+							  {% comment %} <a href="#" class="book_now">Query now</a> {% endcomment %}
+						  </div>
+						</div>
+					  </div>
+					</div>
+				  </div>
+				</div>
+			</div>
+        </div>
+    </div>
+
+<div id="availability-form" class="white-popup-block mfp-hide">
+        <div class="popup_box ">
+                <div class="popup_inner">
+                    <h3>Check Availability</h3>
+					
+                    <form method="POST" action="{% url 'availability' slug=object.slug pk=object.pk%}" id="availForm">
+                        <div class="row">
+                            {% csrf_token %}
+							<input type="hidden" id="previous_page" name="previous_page" 
+    							value="/{{ object.slug }}/">
+							<div class="col-xl-12">
+                                <input id="datepicker" name="start_date" placeholder="Start date" required>
+                            </div>
+                            <div class="col-xl-12">
+                                <input id="datepicker2" name="end_date" placeholder="End date" required>
+                            </div>
+
+							</div>
+							<div class="col-xl-12">&nbsp &nbsp
+							<button id="loadbasic" class="boxed-btn3">Check Availability</button>
+								{% comment %} <button type="submit" class="boxed-btn3">Check Availability</button> {% endcomment %}
+                            </div>  
+                        </div>
+                    </form>
+                </div>
+            </div>
+    </div>
+{% endblock %}
+
+{% block extra_script %}
+
+{% endblock %}

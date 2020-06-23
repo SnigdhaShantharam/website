@@ -1,0 +1,112 @@
+{% extends 'equipments/base.html' %}
+
+{% block extra_style %}
+    <style>
+	.header-area {
+    position: absolute;
+    left: 0;
+    right: 0;
+    width: 100%;
+    top: 0;
+    z-index: 9;
+    padding-top: 28px;
+    background: black;
+		}
+    .table td,
+    .table th {
+    padding: .75rem;
+    vertical-align: middle;
+    border-top: 1px solid #dee2e6
+}
+    .cart{
+        width: 60%;
+    }
+    .delete{display: flex;
+			font-size: 16px;
+			color: #ff0000;
+			border: 1px solid red;
+			text-transform: capitalize;
+			padding: 10px 25px;
+            }
+	.delete:hover{background:red;color:#fff}
+    .pos{
+            vertical-align: top;
+            font-size: 20px;
+            margin: 1px;
+    }
+    .check_out{
+        position: relative;
+    float: right;
+    }
+    .check{
+        display: inline-block;
+    font-size: 14px;
+    background: #009DFF;
+    color: #ffffff;
+    border: 1px solid #009DFF;
+    text-transform: capitalize;
+    padding: 10px 25px;
+    }
+    .a_chck{
+        font-weight: 600;
+    }
+    .a_chck:hover{
+        color: #009DFF;
+        text-decoration: underline;
+    }
+	</style>
+{% endblock %}
+
+{% block nav_menu  %}
+    <li><a href="{% url 'home' %}">home</a></li>
+    <li><a href="{% url 'cameralist'%}">cameras</a></li>
+	<li><a href="{% url 'lenslist'%}">lens</a></li>
+    <li><a href="{% url 'accessorieslist'%}">accessories</a></li>
+    <li><a href="contact.html">Contact</a></li>
+{% endblock %}
+
+{% block main_content %}
+<script src="https://code.iconify.design/1/1.0.6/iconify.min.js"></script>
+    <div class="offers_area" style="padding-top: 145px;">
+        <div class="container">
+        <h4><b>{{ message }} </b>
+        {% if objects %}<a href="{% url 'place_enquiry' %}" class="a_chck">Place an Enquiry</a>{% endif %}
+        </h4>
+        <div class="cart"> <br>
+        <table class="table">
+                <TR>
+                    <th scope="col">Item type</th>
+                    <th scope="col">Model</th>
+                    <th scope="col">Image</th>
+                    <th></th>
+                </TR>
+            {% if objects %}
+
+                 {% for obj in objects %}
+                
+                {% for l in obj.items.all %}
+                <TR>
+                    <td><h4>{{ l.item.equipment_type }}<h4></td>
+                    <td><h4>{{ l.item.model_name }}</td><h4>
+				    <td><img src="{{ l.item.image.url }}" width="auto" height="125"></td>
+                    <td><div display="flex;" title="Remove from enquiry"><a href="{% url 'remove-from-cart' slug=l.item.slug %}" class="delete">Delete<span class="iconify pos" data-icon="ic:sharp-delete-forever" data-inline="false" ></span></a></div></td>
+
+                </TR>
+                {% endfor %}
+                {% endfor %}
+            {% endif %}
+            <th></th><th></th><th></th><th></th>
+        </table>
+        <div class="check_out">
+        <a href="{% url 'place_enquiry' %}" class="check">Place an Enquiry</a>
+        </div>
+        <br><br><div class="blog_details">
+            <h4>
+                <a href="{% url 'cameralist' %}" class="a_chck">Click here to explore wide range of cameras, lens and lot more.</a>
+            </h4>
+                {% comment %} <a href="{% url 'cameralist' %}">Click here to explore wide range of cameras, lens and lot more.</a> {% endcomment %}
+            </div>
+        </div>
+        </div>
+    </div>
+{% endblock %}

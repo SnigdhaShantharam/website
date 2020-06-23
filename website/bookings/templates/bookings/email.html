@@ -1,0 +1,101 @@
+{% load static %}
+{% load crispy_forms_tags %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    {% comment %} <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Pick your Gears and Gadgets</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- <link rel="manifest" href="site.webmanifest"> -->
+    <link rel="shortcut icon" type="image/x-icon" href="{% static './equipments/img/favicon.png' %}">
+    <!-- Place favicon.ico in the root directory -->
+    <script src="https://code.iconify.design/1/1.0.6/iconify.min.js"></script>
+    <!-- CSS here -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <link rel="stylesheet" href="{% static './equipments/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static './equipments/css/owl.carousel.min.css' %}">
+    <link rel="stylesheet" href="{% static './equipments/css/magnific-popup.css' %}">
+    <link rel="stylesheet" href="{% static './equipments/css/font-awesome.min.css' %}">
+    <link rel="stylesheet" href="{% static './equipments/css/themify-icons.css' %}">
+    <link rel="stylesheet" href="{% static './equipments/css/nice-select.css' %}">
+    <link rel="stylesheet" href="{% static './equipments/css/flaticon.css' %}">
+    <link rel="stylesheet" href="{% static './equipments/css/gijgo.css' %}">
+    <link rel="stylesheet" href="{% static './equipments/css/animate.css' %}">
+    <link rel="stylesheet" href="{% static './equipments/css/slicknav.css' %}">
+    <link rel="stylesheet" rel="text/css" href="{% static './equipments/css/style.css' %}"> {% endcomment %}
+    <title>Enquiry alert!</title>
+<style>
+h5{
+  font-family: 'Raleway', sans-serif;
+}
+.mail_container {
+  border: 4px solid darkblue;
+  padding: 1%;
+  background: beige;
+  font-family: 'Raleway', sans-serif;
+}
+.table{
+  width: 100%;
+  position: relative;
+  left: 20%;
+}
+td{
+  padding: .75rem;
+    vertical-align: top;
+    border-top: 1px solid #dee2e6;
+    font-family: 'Raleway', sans-serif;
+}
+thead{
+  color: #fff;
+    background-color: #212529;
+    border-color: #32383e;
+    font-family: 'Raleway', sans-serif;
+}
+
+</style>
+<body>
+
+    <div class="mail_container" style="margin-top:30px ">
+        <div class="column" align="center">
+            <div class="w3-col.m8">
+		<h3><span> <img src="{% static './equipments/img/logo.png' %}" alt="" style="height:50px;"></span>Padmashree Associates</h3>
+                <br>
+                  <h3 id ="menu_text">Received an enquiry for the following.</h3>
+            </div> 
+        </div>
+	<div class="enq_details">
+		<h5>Customer Name: {{ customer_name }}</h5>
+		<h5>Phone number: {{ phone_num }}</h5>
+		<h5>Start date: {{ start_date }}</h5>
+		<h5>End date: {{ end_date }}</h5>
+		<div class="table-responsive">
+			<table class="table table-bordered">
+				<thead >
+				    <tr>
+				      <th >Equipment Type</th>
+				      <th >Model</th>
+				    </tr>
+				</thead>
+				{% for i in enquiry.items.all %}
+        <tr>
+				  <td >{{ i.item.equipment_type }}</td>
+				  <td >{{ i.item.model_name }}</td>
+				</tr>
+        {% endfor %}
+			</table>
+</div>
+	</div>
+    </div>
+
+
+</body>
+</html>

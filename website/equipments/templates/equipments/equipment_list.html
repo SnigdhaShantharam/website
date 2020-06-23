@@ -1,0 +1,62 @@
+{% extends './base.html' %}
+{% load crispy_forms_tags %}
+{% block extra_style %}
+    <style>
+	.header-area {
+    position: absolute;
+    left: 0;
+    right: 0;
+    width: 100%;
+    top: 0;
+    z-index: 9;
+    padding-top: 28px;
+    background: black;
+        }
+    </style>
+{% endblock %}
+
+{% block main_content %}
+
+    <div class="offers_area">
+        <div class="container">
+            <div class="row">
+            <div class="col-xl-12" style="padding-top: 30px;">
+						{% if messages %}
+								{% for message in messages %}
+									<div class="alert alert-{{ message.tags }}">
+									{{ message }}
+									</div>
+								{% endfor%}
+						{% endif %}
+    				</div>
+                <div class="col-xl-12">
+                    <div class="section_title text-center mb-100">
+                        <!--<span>Our Offers</span>-->
+                        <h3>{{ equipment_type }}</h3>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                {% for article in object_list %}
+                
+                <div class="col-xl-4 col-md-4">
+                    <div class="single_offers" >
+                        <div class="about_thumb">
+                            <a href="{% url 'equipment-detail' slug=article.slug %}"><img src="{{ article.image.url }}" alt="img not found"></a>
+                        </div>
+                        <h2>{{ article.company }}<br>
+                            {{ article.model_name }}</h2>
+                            
+                        <ul>
+                            {{ article.description | safe }}
+                        </ul> 
+						<a href="{% url 'equipment-detail' slug=article.slug %}" class="book_now">View and Check Availibility</a><br>
+                        <a href="{% url 'add-to-cart' slug=article.slug %}" class="book_now">Add to enquiry cart</a>
+						{% comment %} <a href="#" class="book_now">book offline</a> {% endcomment %}
+                    </div>
+                </div>
+            {% endfor %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

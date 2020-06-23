@@ -1,0 +1,36 @@
+{% extends './base.html' %}
+{% block extra_style %}
+    <style>
+	.header-area {
+    position: absolute;
+    left: 0;
+    right: 0;
+    width: 100%;
+    top: 0;
+    z-index: 9;
+    padding-top: 28px;
+    background: black;
+		}
+  </style>
+{% endblock %}
+{% block main_content %}
+<!-- Start Sample Area -->
+	<section class="sample-text-area">
+		<div class="container box_1170">
+			<h2 class="text-heading">{{ heading }}</h2>
+      <div class="form_class">
+        <form action="{% url 'login' value='cart' %}" method="POST">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <br>
+            <div class="col-md-8" style="justify-content: space-between;display: flex;">
+            <p><a href="{% url 'signup' %}" class="boxed-btn3">Register here</a></p>
+            <p><button type="submit" class="boxed-btn3">login</button></p>
+            </div>
+        </form>
+      </div>
+		</div>
+	</section>
+	<!-- End Sample Area -->
+
+{% endblock %}

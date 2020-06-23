@@ -1,0 +1,32 @@
+{% extends './base.html' %}
+
+{% block extra_style %}
+    <style>
+	.header-area {
+    position: absolute;
+    left: 0;
+    right: 0;
+    width: 100%;
+    top: 0;
+    z-index: 9;
+    padding-top: 28px;
+    background: black;
+		}
+	</style>
+{% endblock %}
+
+{% block nav_menu  %}
+    <li><a href="{% url 'home' %}">home</a></li>
+    <li><a href="{% url 'cameralist'%}">cameras</a></li>
+	<li><a href="{% url 'lenslist'%}">lens</a></li>
+    <li><a href="{% url 'accessorieslist'%}">accessories</a></li>
+    <li><a href="contact.html">Contact</a></li>
+{% endblock %}
+
+{% block main_content %}
+    <div class="offers_area">
+        <div class="container">
+
+        </div>
+    </div>
+{% endblock %}
