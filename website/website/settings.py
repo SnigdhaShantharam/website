@@ -171,3 +171,8 @@ EMAIL_PORT = 587
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_HOST_USER = 'fundoonotes27@gmail.com'
 EMAIL_HOST_PASSWORD = 'cherry2627@'
+
+# RECIPIENT_OWNER = 'shantaramana@gmail.com'
+# RECIPIENT_OWNER = 'shantaramana@gmail.com'
+RECIPIENT_OWNER = 'sni262728@gmail.com'
+RECIPIENT_FOR_BUG = 'sni262728@gmail.com'

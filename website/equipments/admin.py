@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.contrib.auth.models import Group
 
-from .models import Equipment
+from .models import Equipment, ApiLog
 # Camera, Lens, Accessories, Equipment_Images, 
 
 admin.site.site_header = "Padmashree Associates"
@@ -20,6 +20,6 @@ class EquipmentsAdmin(admin.ModelAdmin):
     fields = ['equipment_type', 'company', 'model_name', 'image', 'description', 'count', 'ratings', 'cost','slug']
 
 admin.site.register(Equipment, EquipmentsAdmin)
-# admin.site.register(Equipment_Images)
+admin.site.register(ApiLog)
 
 admin.site.unregister(Group)

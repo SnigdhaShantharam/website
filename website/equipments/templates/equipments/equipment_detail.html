@@ -63,7 +63,7 @@
 						{% comment %} <a href=""> Availibility: <span style="color:green;">In Stock</span> </a> {% endcomment %}
                         <div class="card_area">
 						  <div class="add_to_cart">
-						  	  <a class=" book_now popup-with-form" href="#availability-form">Check Availibility</a>
+						  	  <a class=" book_now popup-with-form" href="#availability-form">Check Availibility</a><br>
 						  	  {% comment %} <a href="{% url 'availability' slug=object.slug %}" class="book_now">Check Availibility</a>&nbsp {% endcomment %}
                         	  <a href="{% url 'add-to-cart' slug=object.slug %}" class="book_now">Add to enquiry cart</a>
 							  {% comment %} <a href="#" class="book_now">Query now</a> {% endcomment %}

@@ -1,16 +1,16 @@
-from django.db.models.signals import pre_save, post_save
-from django.dispatch import receiver
 from django.db.models import Q
+from django.db.models.signals import post_save, pre_save
+from django.dispatch import receiver
 
-from equipments.models import Equipment
 from bookings.models import Event
+from equipments.models import Equipment
 
 
 @receiver(post_save, sender=Event)
 def update_inventory(sender, instance, created, **kwargs):
     if created:
-        order = sender.objects.filter(start_day__exact=instance.start_day, 
-                equipment_key=instance.equipment_key.pk).exclude(pk__exact=instance.pk)
+        order = sender.objects.filter(start_day__exact=instance.start_day,
+                                      equipment_key=instance.equipment_key.pk).exclude(pk__exact=instance.pk)
         print(order)
         if order:
             latest_order = order.latest('pk')

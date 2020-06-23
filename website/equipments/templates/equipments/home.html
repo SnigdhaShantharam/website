@@ -1,5 +1,15 @@
 {% extends './base.html' %}
-
+{% load static %}
+{% block extra_style %}
+    <style>
+	.vertical { 
+            border-left: 5px solid black; 
+            height: 60px; 
+            left: 50%;
+            margin-right: 3%;
+        }
+	</style>
+{% endblock extra_style %}
 {% block slider_area %}
 <div class="slider_area">
         <div class="slider_active owl-carousel">
@@ -53,6 +63,85 @@
             </div>
         </div>
     </div>
+    <!-- about_area_start -->
+    <div class="about_area">
+        <div class="container">
+            <div class="row">
+                <div class="col-xl-5 col-lg-5">
+                    <div class="about_info">
+                        <div class="section_title mb-20px">
+                            <span style="font-size:22px;">About Us</span>
+                            <h2>Padmashree Associates <br>
+                                    &nbsp&nbsp<b style="font-weight: 700;">BookMyCameraNGadgets</b></h2>
+                        </div>
+                        <p>
+                            We provide professional photography and cinematograpy gadgets for rent.
+                            Choose your required gadgets from the wide array of gallery, select date,
+                            duration and book your gadgets at affordable rent.
+                        </p>
+                    </div>
+                </div>
+                <div class="col-xl-7 col-lg-7">
+                    <div class="about_thumb d-flex">
+                        <div class="img_1">
+                            <img src="{% static './equipments/img/about/about_1.png' %}" alt="">
+                        </div>
+                        <div class="img_2">
+                            <img src="{% static './equipments/img/about/about_2.png' %}" alt="">
+                        </div>
+                    </div>
+                </div>
+           
+                <div class="col-xl-12 col-lg-12">
+                    <div class="about_info">
+                        <div class="section_title mb-20px">
+                            <span style="font-size:22px;">How do I rent my gadgets ?</span>
+                        </div>
+                        
+                        <div style="display:flex;">
+                            <h1><span class="iconify" data-icon="fa-brands:chrome" data-inline="false"></span>
+                            <br><h5 style="padding-top: 10px;
+                                            margin-left: 10px;">Browse</h5>
+                            </h1>
+                            <p style="padding-left: 107px;
+                                    padding-top: 7px;">
+                                
+                                Explore the wide range of cameras, lenses and other gadgets.</p>
+                        </div>
+                        <div style="display:flex;">
+                            <h1><span class="iconify" data-icon="uil:calender" data-inline="false"></span></h1>
+                            <br><h5 style="padding-top: 10px;
+                                            margin-left: 10px;">Check availability</h5>
+                            <p style="padding-left: 30px;
+                                    padding-top: 7px;">
+                                Check the availability of the gadgets you want.</p>
+                        </div>
+                        <div style="display:flex;">
+                            <h1><span class="iconify" data-icon="mdi:comment-question-outline" data-inline="false"></span></h1>
+                            <br><h5 style="padding-top: 10px;
+                                            margin-left: 10px;">Enquire</h5>
+                            <p style="padding-left: 102px;
+                                    padding-top: 7px;">
+                            Place an enquiry for the gadgets would want to rent<br>
+                            and get a call from us for confirmation.</p>
+                        </div>
+                        <div style="display:flex;">
+                            <h1><span class="iconify" data-icon="ion:wallet-outline" data-inline="false"></span></h1>
+                            <br><h5 style="padding-top: 10px;
+                                            margin-left: 10px;">Pay and rent</h5>
+                            
+                            <p style="padding-left: 66px;
+                                padding-top: 7px;">
+                            Pay an advance and collect your camera and gadgets.</p>
+                        </div>
+                </div>
+                
+            </div>
+            </div>
+        </div>
+    </div>
+    <!-- about_area_end -->
+
 {% endblock %}
 
 {% block main_content %}

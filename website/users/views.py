@@ -40,10 +40,10 @@ def user_login(request, value):
 def signup(request):
     if request.method == 'POST':
         form = SignUpForm(request.POST)
-        print('request.POST', request.POST)
-        print()
-        print(SignUpForm(request.POST))
-        print(form.is_valid())
+        # print('request.POST', request.POST)
+        # print()
+        # print(SignUpForm(request.POST))
+        # print(form.is_valid())
         # print(form.erorrs)
         if form.is_valid():
             form.save()
@@ -52,7 +52,7 @@ def signup(request):
             # user = authenticate(phonenumber=phonenumber, password=raw_pass)
             # login(request, user,backend='django.contrib.auth.backends.ModelBackend')
             # print("ergwr")
-            return redirect("signup")
+            return redirect("home")
     else:
         form = SignUpForm()
         return render(request, 'equipments/signup.html', {'heading':'Registration form', 'form': form})

@@ -3,7 +3,7 @@ from django.db.models import Q
 from django.core.exceptions import ValidationError
 from django.contrib.contenttypes.models import ContentType
 from django.urls import reverse
-from django.core.validators import MaxValueValidator, MinValueValidator 
+from django.core.validators import MaxValueValidator, MinValueValidator
 # from django.contrib.auth.models import User
 from django.core.validators import RegexValidator
 from django.utils.translation import ugettext_lazy as _
@@ -23,6 +23,7 @@ booking_type = (
 #     start_date = models.DateField()
 #     end_date = models.DateField()
 
+
 class Event(models.Model):
     customer = models.ForeignKey(AUTH_USER_MODEL, on_delete=models.CASCADE)
     booking_type = models.IntegerField(choices=booking_type)
@@ -31,7 +32,8 @@ class Event(models.Model):
     start_time = models.TimeField()
     end_day = models.DateField()
     end_time = models.TimeField()
-    inventory = models.IntegerField(blank=True, null=True, validators=[MinValueValidator(0)])
+    inventory = models.IntegerField(
+        blank=True, null=True, validators=[MinValueValidator(0)])
     total_cost = models.DecimalField(max_digits=10, decimal_places=2)
     advance = models.DecimalField(max_digits=10, decimal_places=2, default=0.0)
 
@@ -117,17 +119,19 @@ class Event(models.Model):
         # event = Event.objects.filter(start_day=self.start_day).order_by('-id')[0]
         # events = Event.objects.filter(start_day=self.start_day).order_by('-id')
         events = Event.objects.filter(
-            Q(start_day__exact=self.start_day, equipment_key=self.equipment_key)|
+            Q(start_day__exact=self.start_day, equipment_key=self.equipment_key) |
             Q(start_day__exact=self.end_day, equipment_key=self.equipment_key)
         ).order_by('-id')
         if events:
             for event in events:
-                availability= self.check_availability(event.start_day, event.start_time, event.end_day, event.end_time, self.start_day, self.start_time, self.end_day, self.end_time, event.inventory)
+                availability = self.check_availability(event.start_day, event.start_time, event.end_day,
+                                                       event.end_time, self.start_day, self.start_time, self.end_day, self.end_time, event.inventory)
                 print(availability)
                 if not availability:
                     raise ValidationError(
                         'There is an overlap with another event: ' + str(event.start_day) + ', ' + str(
                             event.start_time) + '-' + str(event.end_time))
+
 
 class EnquiryItem(models.Model):
     '''
@@ -136,23 +140,26 @@ class EnquiryItem(models.Model):
         2. This model used to hold the enqiry items in general.
         3. Each of the item in this table is a part of an order/cart.
     '''
-    customer = models.ForeignKey(AUTH_USER_MODEL, on_delete=models.CASCADE, blank=True, null=True)
-    ordered  = models.BooleanField(default=False)
+    customer = models.ForeignKey(
+        AUTH_USER_MODEL, on_delete=models.CASCADE, blank=True, null=True)
+    ordered = models.BooleanField(default=False)
     item = models.ForeignKey(Equipment, on_delete=models.CASCADE)
 
     def __str__(self):
         return '{} {}'.format(self.item.company, self.item.model_name)
+
 
 class EnquiryCart(models.Model):
     '''
         This model holds the cart items for each user.
         Also has boolean field indicating if the order is placed or not.
     '''
-    customer = models.ForeignKey(AUTH_USER_MODEL,default=None, on_delete=models.CASCADE)
-    items    = models.ManyToManyField(EnquiryItem)
+    customer = models.ForeignKey(
+        AUTH_USER_MODEL, default=None, on_delete=models.CASCADE)
+    items = models.ManyToManyField(EnquiryItem)
     date_created = models.DateTimeField(auto_now=True)
     enquiry_date = models.DateTimeField()
-    ordered  = models.BooleanField(default=False)
+    ordered = models.BooleanField(default=False)
 
     def __str__(self):
         return self.customer.first_name
