@@ -124,6 +124,7 @@ def PlaceEnquiry(request):
                 enquiry = EnquiryCart.objects.filter(customer=request.user,
                                                      ordered=False
                                                      ).first()
+                print('-------enquiry',enquiry)
                 send_enquiry_mail(request, enquiry)
                 print('--------mail sent-----------')
                 enquiry.ordered = True

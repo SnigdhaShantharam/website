@@ -100,6 +100,7 @@ def sub_check(availability, inventory):
 
 
 def send_enquiry_mail(request, obj):
+    print('------try to email----------')
     subject, from_email, to = 'Enqiry ALERT!!!', settings.EMAIL_HOST_USER, settings.RECIPIENT_OWNER
     message = render_to_string('bookings/email.html', {
         'customer_name': request.POST['Firstname'] + ' ' + request.POST['Lastname'],
@@ -108,8 +109,9 @@ def send_enquiry_mail(request, obj):
         'end_date': request.POST['end_date'],
         'enquiry': obj
     })
-    # print(message)
+    print(message)
     send_mail(subject, None, from_email, [to], html_message=message)
+
 
 
 def make_log_in_db(reference='', response='', log_type='', request={}, status_code=None):
