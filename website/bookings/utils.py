@@ -109,8 +109,11 @@ def send_enquiry_mail(request, obj):
         'end_date': request.POST['end_date'],
         'enquiry': obj
     })
-    print(message)
+    # print(message)
+    print(settings.EMAIL_HOST_USER)
+    print(settings.RECIPIENT_OWNER)
     send_mail(subject, None, from_email, [to], html_message=message)
+    print('------sent email----------')
 
 
 
@@ -122,8 +125,8 @@ def make_log_in_db(reference='', response='', log_type='', request={}, status_co
     try:
         ApiLog.objects.create(log_type=log_type,
                               reference=reference,
-                              request=json.dumps(request),
-                              response=json.dumps(response),
+                              request=(request),
+                              response=(response),
                               status_code=status_code)
         #print('log created in db')
     except Exception as error:
