@@ -1,5 +1,6 @@
 # log.make_log_in_db(log_type = 'failure', reference = 'appcore.%s'%(reference), response = {'status' : 'member details api error', 'error' : str(error)}, request = {'policy_no' : policy_no, 'quote_no' : quote_no, "data" : payload})
 import datetime
+import json
 from calendar import HTMLCalendar
 from datetime import date
 from datetime import datetime as dtime
