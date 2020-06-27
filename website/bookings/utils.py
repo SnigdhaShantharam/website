@@ -9,6 +9,8 @@ from django.conf import settings
 from django.core.mail import EmailMultiAlternatives, send_mail
 from django.template.loader import render_to_string
 
+from equipments.models import Apilog
+
 from .models import Event
 
 
