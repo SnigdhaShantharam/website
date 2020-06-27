@@ -1,4 +1,5 @@
 import datetime
+import json
 
 from django.contrib import messages
 from django.db.models import Q
@@ -17,9 +18,6 @@ from .utils import (check_availability, formaStrDate, make_log_in_db,
 
 
 def view_cart(request):
-    # if request.user.is_anonymous():
-    #         return render(request, 'equipments/lginredirct.html')
-    # elif request.method == 'GET':
     if request.user.is_authenticated:
         try:
             order_qs = EnquiryCart.objects.filter(
@@ -121,19 +119,15 @@ def PlaceEnquiry(request):
         try:
             form = forms.EnquiryForm(request.POST)
             if form.is_valid():
-                # form.save()
                 enquiry = EnquiryCart.objects.filter(customer=request.user,
                                                      ordered=False
                                                      ).first()
-
-                # print(enquiry.items.all())
                 send_enquiry_mail(request, enquiry)
                 enquiry.ordered = True
                 enquiry.save()
                 messages.success(
                     request, 'Enquiry has been placed successfully. You can expect a call for confirmation soon.')
                 return HttpResponseRedirect(request.path_info)
-                # return redirect(request.path_info, )
         except Exception as e:
             make_log_in_db(log_type='failure',
                            reference='Place_Enqiry',
@@ -155,13 +149,11 @@ def CheckAvailability(request, pk, slug):
         try:
             start_date = formaStrDate(request.POST.get('start_date'))
             end_date = formaStrDate(request.POST.get('end_date'))
+            print(start_date)
             if end_date < start_date:
                 msg = "Please check the dates you have entered."
                 messages.error(request, msg, extra_tags='danger')
                 return HttpResponseRedirect(request.POST.get('previous_page'))
-            # print(request.POST.get('previous_page'))
-            # print(request.path_info)
-            # print(str(start_date))
             else:
                 event = Event.objects.filter(
                     Q(start_day__exact=start_date, equipment_key=pk) |
@@ -172,24 +164,19 @@ def CheckAvailability(request, pk, slug):
                     status = check_availability(
                         event.start_day, event.end_day, start_date, end_date, event.inventory)
                     if status:
-                        # print('yes')https://thumbs.gfycat.com/QuaintLikelyFlyingfish-size_restricted.gif
                         msg = "Product available for {} and {}.".format(
                             str(start_date), str(end_date))
                         messages.success(request, msg)
                         return HttpResponseRedirect(request.POST.get('previous_page'))
-                        # return HttpResponse("yes!! available", status=200)
                     else:
                         msg = "Sorry!! Product not available for the dates you are looking for."
                         messages.error(request, msg, extra_tags='danger')
-                        # print('no')
                         return HttpResponseRedirect(request.POST.get('previous_page'))
-                        # return HttpResponse("not available", status=400)
                 else:
                     msg = "Product available for {} and {}.".format(
                         str(start_date), str(end_date))
                     messages.success(request, msg)
                     return HttpResponseRedirect(request.POST.get('previous_page'))
-                    # return HttpResponse("yes!! available", status=200)
         except Exception as e:
             make_log_in_db(log_type='failure',
                            reference='check availability',

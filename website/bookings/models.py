@@ -116,8 +116,6 @@ class Event(models.Model):
     def clean(self):
         if self.end_day < self.start_day:
             raise ValidationError('Please check the starting and ending dates')
-        # event = Event.objects.filter(start_day=self.start_day).order_by('-id')[0]
-        # events = Event.objects.filter(start_day=self.start_day).order_by('-id')
         events = Event.objects.filter(
             Q(start_day__exact=self.start_day, equipment_key=self.equipment_key) |
             Q(start_day__exact=self.end_day, equipment_key=self.equipment_key)

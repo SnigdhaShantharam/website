@@ -1,3 +1,5 @@
+# log.make_log_in_db(log_type = 'failure', reference = 'appcore.%s'%(reference), response = {'status' : 'member details api error', 'error' : str(error)}, request = {'policy_no' : policy_no, 'quote_no' : quote_no, "data" : payload})
+import datetime
 from calendar import HTMLCalendar
 from datetime import date
 from datetime import datetime as dtime
@@ -6,8 +8,6 @@ from datetime import time
 from django.conf import settings
 from django.core.mail import EmailMultiAlternatives, send_mail
 from django.template.loader import render_to_string
-
-from equipments.models import ApiLog
 
 from .models import Event
 
@@ -28,7 +28,6 @@ class EventCalendar(HTMLCalendar):
         events_from_day = events.filter(start_day__day=day)
         events_html = "<ul>"
         for event in events_from_day:
-            # events_html += event.get_absolute_url() + "<br>"
             href = event.get_absolute_url()
             events_html += "<li><a href='" + href + \
                 "'>" + str(event) + "</a></li><br>"
@@ -73,37 +72,32 @@ class EventCalendar(HTMLCalendar):
 def check_availability(fixed_startday, fixed_endday, new_startday, new_endday, inventory):
     availability = True
     if (new_startday >= fixed_startday and new_startday <= fixed_endday) or (new_endday >= fixed_startday and new_endday <= fixed_endday):  # innner limits
-        # overlap = True
         # print("2")
-        if inventory == 0:
-            # print("2--1")
-            availability = False
-        elif inventory is None:
-            # print("2--2")
-            availability = True
-        elif inventory > 0:
-            availability = True
-            # print("2--3")
-            inventory -= 1
+        sub_check(inventory, availability)
     elif new_startday <= fixed_startday and new_endday >= fixed_endday:  # outter limits
-        # overlap = True
         # print("3")
-        if inventory == 0:
-            availability = False
-            # print("3--1")
-        elif inventory is None:
-            availability = True
-            # print("3--2")
-        elif inventory > 0:
-            availability = True
-            inventory -= 1
-            # print("3--3")
+        sub_check(inventory, availability)
 
     return availability
 
 
+def sub_check(availability, inventory):
+    if inventory == 0:
+        # print("2--1")
+        availability = False
+    elif inventory is None:
+        # print("2--2")
+        availability = True
+    elif inventory > 0:
+        availability = True
+        # print("2--3")
+        inventory -= 1
+
+    return availability, inventory
+
+
 def send_enquiry_mail(request, obj):
-    subject, from_email, to = 'ENqiry ALERT!!!', settings.EMAIL_HOST_USER, settings.RECIPIENT_OWNER
+    subject, from_email, to = 'Enqiry ALERT!!!', settings.EMAIL_HOST_USER, settings.RECIPIENT_OWNER
     message = render_to_string('bookings/email.html', {
         'customer_name': request.POST['Firstname'] + ' ' + request.POST['Lastname'],
         'phone_num': request.POST['phone_num'],
@@ -113,8 +107,6 @@ def send_enquiry_mail(request, obj):
     })
     # print(message)
     send_mail(subject, None, from_email, [to], html_message=message)
-
-# making logs in the Database with make_log_in_db
 
 
 def make_log_in_db(reference='', response='', log_type='', request={}, status_code=None):
@@ -146,7 +138,6 @@ def send_bug_email(response):
         print(error)
 
 # def get_email_list():
-#     try:
 #         conf = Configuration.objects.get(entity='downtime_notification')
 
 #         email_list = list()
@@ -168,5 +159,3 @@ def make_message_format(reference, request, response, status_code):
         msg += 'Status_code: %i\n\n' % (status_code)
 
     return msg
-
-# log.make_log_in_db(log_type = 'failure', reference = 'appcore.%s'%(reference), response = {'status' : 'member details api error', 'error' : str(error)}, request = {'policy_no' : policy_no, 'quote_no' : quote_no, "data" : payload})
