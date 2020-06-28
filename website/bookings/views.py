@@ -117,23 +117,18 @@ def remove_from_cart(request, slug):
 def PlaceEnquiry(request):
     if request.method == 'POST':
         try:
-            # print('--------place enqiry-----------')
             form = forms.EnquiryForm(request.POST)
             if form.is_valid():
-                # print('--------form valid-----------')
                 enquiry = EnquiryCart.objects.filter(customer=request.user,
                                                      ordered=False
                                                      ).first()
-                # print('-------enquiry',enquiry)
                 send_enquiry_mail(request, enquiry)
-                # print('--------mail sent-----------')
                 enquiry.ordered = True
                 enquiry.save()
                 messages.success(
                     request, 'Enquiry has been placed successfully. You can expect a call for confirmation soon.')
                 return HttpResponseRedirect(request.path_info)
         except Exception as e:
-            # print('--------exception occured-----------')
             make_log_in_db(log_type='failure',
                            reference='Place_Enqiry',
                            response={'error': str(e)},
