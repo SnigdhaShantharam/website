@@ -169,12 +169,21 @@ CKEDITOR_CONFIGS = {
 }
 
 # email settings
-# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_USE_TLS = True
-EMAIL_PORT = env('EMAIL_PORT')
-EMAIL_HOST = env('EMAIL_HOST')
-EMAIL_HOST_USER = env('EMAIL_HOST_USER')
-EMAIL_HOST_PASSWORD = env('EMAIL_HOST_PASSWORD')
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+# EMAIL_USE_TLS = True
+# EMAIL_PORT = env('EMAIL_PORT')
+# EMAIL_HOST = env('EMAIL_HOST')
+# EMAIL_HOST_USER = env('EMAIL_HOST_USER')
+# EMAIL_HOST_PASSWORD = env('EMAIL_HOST_PASSWORD')
 
 RECIPIENT_OWNER = env('RECIPIENT_OWNER')
 RECIPIENT_FOR_BUG = env('RECIPIENT_FOR_BUG')
+
+#aws ses settings
+EMAIL_USE_TLS = True
+EMAIL_PORT = 587
+EMAIL_HOST = 'email-smtp.ap-south-1.amazonaws.com'
+EMAIL_HOST_USER = 'AKIAXQ7GRUCCQ2KBTOOR'
+EMAIL_HOST_PASSWORD = 'BFey0JumDSva4ByL+cbYlFY9mCcpMcfzaLsngL8cC1EM'
+EMAIL_USE_TLS = True
+EMAIL_SENDER = env('SENDER_MAIL')

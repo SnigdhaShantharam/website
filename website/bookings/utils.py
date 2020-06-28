@@ -100,8 +100,8 @@ def sub_check(availability, inventory):
 
 
 def send_enquiry_mail(request, obj):
-    print('------try to email----------')
-    subject, from_email, to = 'Enqiry ALERT!!!', settings.EMAIL_HOST_USER, settings.RECIPIENT_OWNER
+    # print('------try to email----------')
+    subject, from_email, to = 'Enqiry ALERT!!!', settings.EMAIL_SENDER, settings.RECIPIENT_OWNER
     message = render_to_string('bookings/email.html', {
         'customer_name': request.POST['Firstname'] + ' ' + request.POST['Lastname'],
         'phone_num': request.POST['phone_num'],
@@ -110,10 +110,11 @@ def send_enquiry_mail(request, obj):
         'enquiry': obj
     })
     # print(message)
-    print(settings.EMAIL_HOST_USER)
-    print(settings.RECIPIENT_OWNER)
+    # print(settings.EMAIL_SENDER)
+    # print(settings.EMAIL_HOST_USER)
+    # print(settings.RECIPIENT_OWNER)
     send_mail(subject, None, from_email, [to], html_message=message)
-    print('------sent email----------')
+    # print('------sent email----------')
 
 
 
